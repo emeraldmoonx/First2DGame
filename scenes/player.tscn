@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dwj6b16t0pbg1"]
+[gd_scene load_steps=26 format=3 uid="uid://dwj6b16t0pbg1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_lv808"]
 [ext_resource type="Texture2D" uid="uid://rfimgumikwgg" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="1_xmlqm"]
@@ -11,25 +11,17 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("1_xmlqm")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_luboe"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fq64k"]
 atlas = ExtResource("1_xmlqm")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(0, 160, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_noa85"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_movid"]
 atlas = ExtResource("1_xmlqm")
-region = Rect2(96, 0, 32, 32)
+region = Rect2(64, 160, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gmd0n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0g6f"]
 atlas = ExtResource("1_xmlqm")
 region = Rect2(32, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8f7we"]
-atlas = ExtResource("1_xmlqm")
-region = Rect2(192, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_120cy"]
-atlas = ExtResource("1_xmlqm")
-region = Rect2(224, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_db8ja"]
 atlas = ExtResource("1_xmlqm")
@@ -103,28 +95,22 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cjjrw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_luboe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_noa85")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 10.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gmd0n")
+"texture": SubResource("AtlasTexture_fq64k")
 }, {
-"duration": 3.0,
-"texture": SubResource("AtlasTexture_8f7we")
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_movid")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_120cy")
+"texture": SubResource("AtlasTexture_m0g6f")
 }],
-"loop": true,
+"loop": false,
 "name": &"jumping",
 "speed": 10.0
 }, {
@@ -179,7 +165,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b5y3q"]
@@ -194,6 +180,8 @@ position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_75f0k")
 animation = &"jumping"
 autoplay = "idle"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
