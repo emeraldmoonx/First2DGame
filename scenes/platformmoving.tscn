@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://e62cgfuff0br"]
+
+[ext_resource type="Script" path="res://scripts/platformmoving.gd" id="1_uoamc"]
+[ext_resource type="Texture2D" uid="uid://csdl0sdqjqvx0" path="res://assets/brackeys_platformer_assets/sprites/platforms.png" id="2_5x3mx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_607xm"]
+size = Vector2(30, 8)
+
+[node name="PlatformAuto" type="StaticBody2D"]
+script = ExtResource("1_uoamc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5x3mx")
+region_enabled = true
+region_rect = Rect2(16.3158, -0.0237525, 31.6638, 9.06049)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_607xm")
+one_way_collision = true
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(15, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-15, 0)
