@@ -1,31 +1,35 @@
 extends CharacterBody2D
 
-var speed = 100
-var direction = Vector2(1, 0)
-var player = null
+@export var speed: float = 150.0
+@export var gravity: float = 1000.0
+@export var jump_force: float = -300.0
 
 func _physics_process(delta):
-	var motion = direction * speed * delta
-	global_position += motion
+	# Apply gravity to the built-in velocity property
+	velocity.y += gravity * delta
+	
+	# Handle player movement
+	if Input.is_action_pressed("move_right"):
+		velocity.x = speed
+		$AnimatedSprite2D.flip_h = false
+		$AnimatedSprite2D.play("run")
+	elif Input.is_action_pressed("move_left"):
+		velocity.x = -speed
+		$AnimatedSprite2D.flip_h = true
+		$AnimatedSprite2D.play("run")
+	else:
+		velocity.x = 0
+		$AnimatedSprite2D.play("idle")
+	
+	# Jumping logic (now roll)
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_force
+		print("Playing jumping animation")
+		$AnimatedSprite2D.play("jumping")  # Play the roll animation
 
-	# If the player is on the platform, apply the platform's velocity to the player
-	if player and is_player_on_platform():
-		player.apply_platform_velocity(motion)
-
-	# Reverse direction if necessary (based on RayCast collisions)
-	if should_reverse():
-		direction *= -1
-
-func is_player_on_platform() -> bool:
-	return player and player.is_on_floor()
-
-func _on_CollisionShape2D_body_entered(body):
-	if body.is_in_group("Player"):
-		player = body
-
-func _on_CollisionShape2D_body_exited(body):
-	if body.is_in_group("Player"):
-		player = null
-
-func should_reverse() -> bool:
-	return $RayCastRight.is_colliding() or $RayCastLeft.is_colliding()
+	# Ensure roll animation continues mid-air
+	if !is_on_floor():
+		$AnimatedSprite2D.play("inair")
+	
+	# Move and slide the player
+	move_and_slide()

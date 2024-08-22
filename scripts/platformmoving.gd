@@ -1,29 +1,19 @@
-extends StaticBody2D
+extends CharacterBody2D
 
-var speed = 100
-var direction = Vector2(1, 0)
-var player = null
+@export var speed: float = 50.0  # Speed at which the platform moves
+@export var move_direction: Vector2 = Vector2.RIGHT  # Direction of movement
 
 func _physics_process(delta):
-	var motion = direction * speed * delta
-	global_position += motion
+	# Ensure vertical velocity is zero to prevent downward movement
+	velocity = move_direction * speed
+	velocity.y = 0
+	
+	# Apply the velocity to move the platform
+	move_and_slide()
 
-	if player and is_player_on_platform():
-		player.velocity.x += motion.x
+	# Reverse direction if the platform hits a wall
+	if is_on_wall():
+		reverse_direction()
 
-	if should_reverse():
-		direction *= -1
-
-func is_player_on_platform() -> bool:
-	return player and player.is_on_floor()
-
-func _on_CollisionShape2D_body_entered(body):
-	if body.is_in_group("Player"):
-		player = body
-
-func _on_CollisionShape2D_body_exited(body):
-	if body.is_in_group("Player"):
-		player = null
-
-func should_reverse() -> bool:
-	return $RayCastRight.is_colliding() or $RayCastLeft.is_colliding()
+func reverse_direction():
+	move_direction = -move_direction  # Reverse the direction vector
