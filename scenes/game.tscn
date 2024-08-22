@@ -293,7 +293,7 @@ horizontal_alignment = 1
 
 [node name="Platforms" type="Node" parent="."]
 
-[node name="PlatformAuto" parent="Platforms" instance=ExtResource("8_vwtbh")]
+[node name="PlatformMoving" parent="Platforms" instance=ExtResource("8_vwtbh")]
 position = Vector2(272, 4)
 
 [node name="PlatformStatic" parent="Platforms" instance=ExtResource("9_jhxaf")]
