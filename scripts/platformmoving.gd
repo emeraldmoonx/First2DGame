@@ -1,15 +1,29 @@
-extends PhysicsBody2D
+extends StaticBody2D
 
-const speed = 50
+var speed = 100
+var direction = Vector2(1, 0)
+var player = null
 
-var direction = 1
+func _physics_process(delta):
+	var motion = direction * speed * delta
+	global_position += motion
 
-@onready var ray_cast_right: RayCast2D = $RayCastRight
-@onready var ray_cast_left: RayCast2D = $RayCastLeft
+	if player and is_player_on_platform():
+		player.velocity.x += motion.x
 
-func _process(delta: float) -> void:
-	if ray_cast_right.is_colliding():
-		direction = -1
-	if ray_cast_left.is_colliding():
-		direction = 1
-	position.x += direction * speed * delta
+	if should_reverse():
+		direction *= -1
+
+func is_player_on_platform() -> bool:
+	return player and player.is_on_floor()
+
+func _on_CollisionShape2D_body_entered(body):
+	if body.is_in_group("Player"):
+		player = body
+
+func _on_CollisionShape2D_body_exited(body):
+	if body.is_in_group("Player"):
+		player = null
+
+func should_reverse() -> bool:
+	return $RayCastRight.is_colliding() or $RayCastLeft.is_colliding()
