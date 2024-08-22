@@ -15,10 +15,10 @@ region_enabled = true
 region_rect = Rect2(16.3158, -0.0237525, 31.6638, 9.06049)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
-target_position = Vector2(15, 0)
+target_position = Vector2(16, 0)
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
-target_position = Vector2(-15, 0)
+target_position = Vector2(-16, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_607xm")

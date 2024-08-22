@@ -24,12 +24,9 @@ func _physics_process(delta):
 	# Jumping logic (now roll)
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
-		print("Playing jumping animation")
-		$AnimatedSprite2D.play("jumping")  # Play the roll animation
-
 	# Ensure roll animation continues mid-air
 	if !is_on_floor():
-		$AnimatedSprite2D.play("inair")
+		$AnimatedSprite2D.play("jumping")
 	
 	# Move and slide the player
 	move_and_slide()

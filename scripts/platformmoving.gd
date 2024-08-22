@@ -1,19 +1,26 @@
 extends CharacterBody2D
 
-@export var speed: float = 50.0  # Speed at which the platform moves
-@export var move_direction: Vector2 = Vector2.RIGHT  # Direction of movement
+@export var speed: float = 50.0  # Speed of the platform
+var move_direction: Vector2 = Vector2.RIGHT  # Initial movement direction
 
-func _physics_process(delta):
-	# Ensure vertical velocity is zero to prevent downward movement
+func _ready():
+	# Ensure both RayCasts are enabled
+	$RayCastRight.enabled = true
+	$RayCastLeft.enabled = true
+
+func _physics_process(_delta):
+	# Set the velocity based on the current movement direction and speed
 	velocity = move_direction * speed
-	velocity.y = 0
-	
-	# Apply the velocity to move the platform
+
+	# Apply the movement using move_and_slide()
 	move_and_slide()
 
-	# Reverse direction if the platform hits a wall
-	if is_on_wall():
+	# Check for collisions using RayCasts and reverse direction if necessary
+	if move_direction == Vector2.RIGHT and $RayCastRight.is_colliding():
+		reverse_direction()
+	elif move_direction == Vector2.LEFT and $RayCastLeft.is_colliding():
 		reverse_direction()
 
 func reverse_direction():
-	move_direction = -move_direction  # Reverse the direction vector
+	# Reverse the movement direction
+	move_direction = -move_direction
